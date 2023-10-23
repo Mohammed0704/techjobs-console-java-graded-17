@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -70,12 +67,14 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        // Convert the search term to lowercase
+        String lowercaseValue = value.toLowerCase();
 
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(lowercaseValue)) {
                 jobs.add(row);
             }
         }
@@ -95,7 +94,25 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap <String, String>> jobs = new ArrayList<>();
+        //Check for unique values
+        Set<String> uniqueValues = new HashSet<>();
+        // Convert the search term to lowercase
+        String lowercaseValue = value.toLowerCase();
+
+        for (HashMap<String, String> map : allJobs) {
+            //This allows me to iterate over just the values stored in each HashMap
+            for (String checkValue : map.values()) {
+                if (checkValue.toLowerCase().contains(lowercaseValue)) {
+                    //This checks if checkValue can be added to uniqueValue set. If it does return true it means unique otherwise value is not added because already exists
+                    //if (uniqueValues.add(checkValue)) {
+                        jobs.add(map);
+                    //}
+                    //break;  //Exit the loop to avoid adding the same job
+                }
+            }
+        }
+        return jobs;
     }
 
     /**
