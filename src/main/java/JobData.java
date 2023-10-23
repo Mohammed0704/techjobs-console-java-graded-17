@@ -96,7 +96,7 @@ public class JobData {
         // TODO - implement this method
         ArrayList<HashMap <String, String>> jobs = new ArrayList<>();
         //Check for unique values
-        Set<String> uniqueValues = new HashSet<>();
+        Set<HashMap<String, String>> uniqueJobs = new HashSet<>();
         // Convert the search term to lowercase
         String lowercaseValue = value.toLowerCase();
 
@@ -104,11 +104,11 @@ public class JobData {
             //This allows me to iterate over just the values stored in each HashMap
             for (String checkValue : map.values()) {
                 if (checkValue.toLowerCase().contains(lowercaseValue)) {
-                    //This checks if checkValue can be added to uniqueValue set. If it does return true it means unique otherwise value is not added because already exists
-                    //if (uniqueValues.add(checkValue)) {
+                    //This checks if each individual row can be added to uniqueValue set. If it does return true it means unique otherwise value is not added because already exists
+                    if (uniqueJobs.add(map)) {
                         jobs.add(map);
-                    //}
-                    //break;  //Exit the loop to avoid adding the same job
+                    }
+                    break;  //Exit the loop to avoid adding the same job
                 }
             }
         }
